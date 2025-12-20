@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique(); // Contoh: 'services' (buat URL admin)
             $table->string('icon')->nullable(); // Class FontAwesome, misal 'fa-briefcase'
             $table->json('form_schema')->nullable(); // [{"name":"jabatan", "type":"text", "label":"Jabatan Team"}]
-            
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
