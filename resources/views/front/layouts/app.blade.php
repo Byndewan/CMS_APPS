@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,16 +12,19 @@
         :root {
             --bs-primary: {{ get_setting('theme_color', '#0d6efd') }};
         }
+
         .btn-primary {
             background-color: var(--bs-primary) !important;
             border-color: var(--bs-primary) !important;
         }
+
         .navbar-brand {
             font-weight: bold;
             color: var(--bs-primary) !important;
         }
     </style>
 </head>
+
 <body>
 
     {{-- NAVBAR --}}
@@ -28,7 +32,7 @@
         <div class="container">
             {{-- Logo & Judul --}}
             <a class="navbar-brand" href="{{ url('/') }}">
-                @if(get_setting('app_logo'))
+                @if (get_setting('app_logo'))
                     <img src="{{ asset('storage/' . get_setting('app_logo')) }}" height="30" alt="Logo">
                 @else
                     {{ get_setting('app_name', 'Starter Pack') }}
@@ -43,7 +47,8 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-2 px-4" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-2 px-4"
+                            href="#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -59,5 +64,8 @@
         </div>
     </footer> --}}
 
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
 </body>
+
 </html>

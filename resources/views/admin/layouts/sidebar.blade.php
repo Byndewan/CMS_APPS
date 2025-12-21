@@ -27,8 +27,9 @@
         {{-- HEADER SYSTEM --}}
         <li class="nav-header text-muted mt-3 ms-2 text-uppercase" style="font-size: 0.75rem;">System</li>
         <li>
-            <a href="#" class="nav-link link-dark">
-                <i class="fa-solid fa-layer-group me-2"></i> Sections
+            <a href="{{ route('admin.sections.index') }}"
+                class="nav-link {{ request()->routeIs('admin.sections*') ? 'active' : 'link-dark' }}">
+                <i class="fa-solid fa-layer-group me-2"></i> Page Builder
             </a>
         </li>
         <li>

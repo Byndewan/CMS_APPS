@@ -22,4 +22,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/content/{module_slug}/{id}/edit', [App\Http\Controllers\Admin\PostController::class, 'edit'])->name('admin.content.edit');
     Route::put('/content/{module_slug}/{id}', [App\Http\Controllers\Admin\PostController::class, 'update'])->name('admin.content.update');
     Route::delete('/content/{module_slug}/{id}', [App\Http\Controllers\Admin\PostController::class, 'destroy'])->name('admin.content.destroy');
+    Route::get('/sections', [App\Http\Controllers\Admin\SectionController::class, 'index'])->name('admin.sections.index');
+    Route::put('/sections/{id}', [App\Http\Controllers\Admin\SectionController::class, 'update'])->name('admin.sections.update');
+    Route::post('/sections/reorder', [App\Http\Controllers\Admin\SectionController::class, 'reorder'])->name('admin.sections.reorder');
 })->middleware(['auth', 'role:admin']);
