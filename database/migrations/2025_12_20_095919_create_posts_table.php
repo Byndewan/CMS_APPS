@@ -16,8 +16,7 @@ return new class extends Migration
             $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');
             $table->string('title'); // Judul standar (Wajib ada di semua modul)
             $table->string('slug')->unique(); // URL Friendly
-            $table->string('thumbnail')->nullable(); // Gambar cover (opsional)
-            $table->json('meta_data')->nullable(); 
+            $table->json('content')->nullable();
             $table->boolean('is_published')->default(true);
             $table->integer('views')->default(0); // Hitung jumlah lihat (opsional)
             $table->timestamps();

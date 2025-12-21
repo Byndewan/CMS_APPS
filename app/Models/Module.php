@@ -12,4 +12,8 @@ class Module extends Model
         'form_schema' => 'array',
         'is_active'   => 'boolean',
     ];
+
+    function posts() {
+        return $this->hasMany(Post::class);
+    }
 }

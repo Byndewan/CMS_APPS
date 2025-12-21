@@ -53,11 +53,11 @@
     @yield('content')
 
     {{-- FOOTER --}}
-    <footer class="bg-light py-4 mt-5 text-center">
+    {{-- <footer class="bg-light py-4 mt-5 text-center">
         <div class="container">
             <p class="text-muted mb-0">{{ get_setting('footer_text') }}</p>
         </div>
-    </footer>
+    </footer> --}}
 
 </body>
 </html>

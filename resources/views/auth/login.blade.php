@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Rafli CMS</title>
+    <title>Login - Abyan CMS</title>
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-light">
@@ -40,7 +40,7 @@
                 </form>
             </div>
             <div class="card-footer text-center bg-white py-3">
-                <small class="text-muted">&copy; 2025 Rafli Starter Pack</small>
+                <small class="text-muted">&copy; 2025 Abyan Starter Pack</small>
             </div>
         </div>
     </div>
