@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Abyan CMS</title>
+    <title>Login - My CMS</title>
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-light">
 
     <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="card shadow-lg border-0" style="width: 400px;">
+        <div class="card border-0" style="width: 400px;">
             <div class="card-body p-5">
                 <div class="text-center mb-4">
                     <h3 class="fw-bold text-primary">Admin Login</h3>
@@ -40,7 +40,7 @@
                 </form>
             </div>
             <div class="card-footer text-center bg-white py-3">
-                <small class="text-muted">&copy; 2025 Abyan Starter Pack</small>
+                <small class="text-muted">&copy; 2025 My CMS</small>
             </div>
         </div>
     </div>

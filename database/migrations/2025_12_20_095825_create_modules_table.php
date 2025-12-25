@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Contoh: 'Services', 'Portfolio', 'Tim Kami'
-            $table->string('slug')->unique(); // Contoh: 'services' (buat URL admin)
-            $table->string('icon')->nullable(); // Class FontAwesome, misal 'fa-briefcase'
-            $table->json('form_schema')->nullable(); // [{"name":"jabatan", "type":"text", "label":"Jabatan Team"}]
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('icon')->nullable();
+            $table->json('form_schema')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

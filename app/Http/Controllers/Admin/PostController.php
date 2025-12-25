@@ -47,13 +47,12 @@ class PostController extends Controller
             }
         }
 
-        // Simpan ke Database
         Post::create([
             'module_id' => $module->id,
             'title'     => $request->title,
-            'slug'      => Str::slug($request->title) . '-' . Str::random(5), // Slug unik
-            'content'   => $contentData, // Otomatis ubah jadi JSON
-            'is_published' => true
+            'slug'      => Str::slug($request->title) . '-' . Str::random(5),
+            'content'   => $contentData,
+            'is_published' => $request->is_published,
         ]);
 
         return redirect()->route('admin.content.index', $module->slug)
@@ -67,13 +66,10 @@ class PostController extends Controller
         return view('admin.posts.edit', compact('module', 'post'));
     }
 
-    // PROSES UPDATE DATA
     public function update(Request $request, $module_slug, $id)
     {
         $module = Module::where('slug', $module_slug)->firstOrFail();
         $post   = Post::findOrFail($id);
-
-        // Validasi
         $request->validate([
             'title' => 'required|max:255',
         ]);
@@ -82,7 +78,6 @@ class PostController extends Controller
         $inputContent = $request->input('content', []);
         $contentData = array_merge($contentData, $inputContent);
 
-        // Handle File Upload
         if ($module->form_schema) {
             foreach ($module->form_schema as $field) {
                 if ($field['type'] == 'file') {
@@ -99,16 +94,15 @@ class PostController extends Controller
             }
         }
 
-        // Simpan Perubahan ke DB
         $post->update([
             'title'   => $request->title,
             'content' => $contentData,
+            'is_published' => $request->is_published,
         ]);
 
         return redirect()->route('admin.content.index', $module->slug)->with('success', 'Data berhasil diperbarui!');
     }
 
-    // PROSES HAPUS
     public function destroy($module_slug, $id)
     {
         $post = Post::findOrFail($id);

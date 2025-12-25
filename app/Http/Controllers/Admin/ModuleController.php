@@ -12,7 +12,7 @@ class ModuleController extends Controller
     // List Semua Modul
     public function index()
     {
-        $modules = Module::all();
+        $modules = Module::paginate(10);
         return view('admin.modules.index', compact('modules'));
     }
 
@@ -53,7 +53,7 @@ class ModuleController extends Controller
 
         return redirect()->route('admin.modules.index')->with('success', 'Modul berhasil dibuat! Refresh halaman untuk lihat menu baru.');
     }
-    
+
     // HALAMAN EDIT
     public function edit($id)
     {

@@ -16,7 +16,6 @@ class HomeController extends Controller
         ->orderBy('order')
         ->get()
         ->groupBy('zone');
-        // dd($sections);
 
         return view('home', compact('sections'));
     }

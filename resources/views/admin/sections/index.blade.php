@@ -80,12 +80,13 @@
 
 @section('content')
     <div class="container-fluid">
-
-        {{-- HEADER & TABS NAVIGASI --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">Page Builder</h2>
-
-            {{-- TOMBOL TAB --}}
+            <div class="d-flex align-items-center gap-3">
+                <h2 class="mb-0">Page Builder</h2>
+                <button class="btn btn-primary btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#createSectionModal">
+                    <i class="fa-solid fa-plus me-2"></i> Tambah Section
+                </button>
+            </div>
             <ul class="nav nav-pills" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active fw-bold" id="pills-edit-tab" data-bs-toggle="pill"
@@ -101,20 +102,12 @@
                 </li>
             </ul>
         </div>
-
-        {{-- ISI TABS --}}
         <div class="tab-content" id="pills-tabContent">
-
-            {{-- TAB 1: EDITOR MODE (Drag & Drop) --}}
             <div class="tab-pane fade show active" id="pills-edit" role="tabpanel">
-
-                {{-- ZONE HEADER --}}
                 <div class="zone-wrapper" id="header" data-zone="header">
                     <span class="zone-label"><i class="fa-solid fa-heading me-1"></i> Header Zone</span>
                     @include('admin.sections.item_renderer', ['items' => $sections['header'] ?? []])
                 </div>
-
-                {{-- ZONE HERO --}}
                 <div class="zone-wrapper" id="hero" data-zone="hero">
                     <span class="zone-label"><i class="fa-solid fa-image me-1"></i> Hero Banner Zone</span>
                     @include('admin.sections.item_renderer', ['items' => $sections['hero'] ?? []])
@@ -166,15 +159,11 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- ZONE FOOTER --}}
                 <div class="zone-wrapper" id="footer" data-zone="footer">
                     <span class="zone-label"><i class="fa-solid fa-shoe-prints me-1"></i> Footer Zone</span>
                     @include('admin.sections.item_renderer', ['items' => $sections['footer'] ?? []])
                 </div>
             </div>
-
-            {{-- TAB 2: LIVE PREVIEW --}}
             <div class="tab-pane fade" id="pills-preview" role="tabpanel">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <p class="mb-0 text-muted small"><i class="fa-solid fa-info-circle me-1"></i> Ini adalah tampilan
@@ -186,20 +175,103 @@
                 </div>
 
                 <div class="preview-container shadow">
-                    {{-- Loading Spinner --}}
                     <div id="preview-loader" class="loading-overlay">
                         <div class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
-
-                    {{-- IFRAME KOSONG --}}
                     <iframe id="site-preview" src="" title="Website Preview"></iframe>
                 </div>
             </div>
 
         </div>
     </div>
+
+    {{-- MODAL CREATE SECTION BARU --}}
+    <div class="modal fade" id="createSectionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <form action="{{ route('admin.sections.store') }}" method="POST">
+                @csrf
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold">Tambah Section Baru</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Judul Section (Internal)</label>
+                                <input type="text" name="title" class="form-control"
+                                    placeholder="Misal: Slider Produk" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Zona Lokasi</label>
+                                <select name="zone" class="form-select bg-light">
+                                    <option value="header">Header Zone</option>
+                                    <option value="hero">Hero Banner Zone</option>
+                                    <option value="sidebar_left">Sidebar Left</option>
+                                    <option value="main_top">Main Content - Top</option>
+                                    <option value="main_center" selected>Main Content - Center (Primary)</option>
+                                    <option value="main_bottom">Main Content - Bottom</option>
+                                    <option value="sidebar_right">Sidebar Right</option>
+                                    <option value="footer">Footer Zone</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Tipe Konten</label>
+                                <select name="type" class="form-select" id="createTypeSelector"
+                                    onchange="toggleCreateType()">
+                                    <option value="dynamic">Dinamis (Ambil dari Modul)</option>
+                                    <option value="static">Statis (Teks/HTML Manual)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Background Color</label>
+                                <input type="color" name="bg_color" class="form-control form-control-color w-100"
+                                    value="#ffffff">
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="createDynamicOptions">
+                            <div class="alert alert-info border-0 small">
+                                <i class="fa-solid fa-info-circle me-1"></i>
+                                Pilih modul konten yang ingin ditampilkan.
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-label small fw-bold">Pilih Modul</label>
+                                    <select name="module_id" class="form-select">
+                                        @foreach ($modules as $mod)
+                                            <option value="{{ $mod->id }}">{{ $mod->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small fw-bold">Jumlah Tampil</label>
+                                    <input type="number" name="limit_post" class="form-control" value="5">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="createStaticOptions" style="display: none;">
+                            <div class="alert alert-warning border-0 small">
+                                <i class="fa-solid fa-code me-1"></i>
+                                Tulis HTML manual atau teks biasa.
+                            </div>
+                            <label class="form-label small fw-bold">Konten HTML</label>
+                            <textarea name="static_content" class="form-control" rows="5" placeholder="<h1>Halo Dunia</h1>"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary fw-bold">Tambah Section</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')

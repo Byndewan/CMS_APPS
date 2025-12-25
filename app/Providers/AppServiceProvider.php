@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Module;
+use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -27,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('sidebar_modules', Module::where('is_active', 1)->get());
             });
         }
+        Paginator::useBootstrapFive();
     }
 }
